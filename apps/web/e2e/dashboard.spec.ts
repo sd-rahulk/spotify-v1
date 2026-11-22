@@ -1,0 +1,51 @@
+import { expect,test } from '@playwright/test';
+function wave(tone:number,seconds=3) {
+  const rate=8000, length=rate*seconds;
+  const data=Buffer.alloc(44+length*2);
+  data.write('RIFF');data.writeUInt32LE(data.length-8,4);data.write('WAVEfmt ',8);data.writeUInt32LE(16,16);
+  data.writeUInt16LE(1,20);data.writeUInt16LE(1,22);data.writeUInt32LE(rate,24);data.writeUInt32LE(rate*2,28);
+  data.writeUInt16LE(2,32);data.writeUInt16LE(16,34);data.write('data',36);data.writeUInt32LE(length*2,40);
+  for(let i=0;i<length;i++)data.writeInt16LE(Math.round(Math.sin(i*2*Math.PI*tone/rate)*1200),44+i*2);
+  return data;
+}
+test('owner uploads 20 tracks, edits tags, searches, creates a playlist and previews audio',async({page})=>{
+  await page.goto('/');
+  await expect(page.getByRole('heading',{name:'Open your library'})).toBeVisible();
+  await page.getByLabel('Owner password').fill('resonant-local-test-only');
+  await page.getByRole('button',{name:'Sign in'}).click();
+  await expect(page.getByRole('heading',{name:'Home',exact:true})).toBeVisible();
+  await page.getByRole('navigation').getByRole('button',{name:'Upload Music'}).click();
+  const files=Array.from({length:20},(_,i)=>({name:'Signal '+(i+1)+'.wav',mimeType:'audio/wav',buffer:wave(210+i*17,i===0?20:3)}));
+  await page.locator('input[type=file]').first().setInputFiles(files);
+  await page.getByRole('button',{name:'Upload / retry'}).click();
+  await expect(page.locator('.file-row').filter({hasText:'· Complete'})).toHaveCount(20,{timeout:120000});
+  await page.locator('input[type=file]').first().setInputFiles(files[0]);
+  await page.getByRole('button',{name:'Upload / retry'}).click();
+  await expect(page.locator('.file-row').filter({hasText:'· Duplicate'})).toHaveCount(1);
+  await page.getByRole('button',{name:'All Songs'}).click();
+
+  await page.getByLabel('Search songs').fill('Signal 1');
+  const track=page.getByRole('row').filter({has:page.getByText('Signal 1',{exact:true})});
+  await track.getByRole('button',{name:'Edit'}).click();
+  await page.getByLabel(/^title$/i).fill('Night Signal');
+  await page.getByRole('button',{name:'Save changes'}).click();
+  await page.getByLabel('Search songs').fill('Night Signal');
+  await expect(page.getByRole('button',{name:/Night Signal Unknown artist/})).toBeVisible();
+  await page.getByRole('button',{name:'Playlists',exact:true}).click();
+  await page.getByLabel('Playlist name').fill('Evening set');
+  await page.getByRole('button',{name:'Create playlist'}).click();
+  await expect(page.getByRole('button',{name:/Evening set/})).toBeVisible();
+  await page.getByRole('button',{name:'All Songs'}).click();
+  await page.getByLabel('Search songs').fill('Night Signal');
+  await page.getByRole('checkbox',{name:'Select Night Signal'}).check();
+  await page.getByLabel('Choose playlist').selectOption({label:'Evening set'});
+  await page.getByRole('button',{name:'Add selected'}).click();
+  await expect(page.getByText('Added to playlist')).toBeVisible();
+  await page.getByRole('button',{name:/Night Signal Unknown artist/}).click();
+  await expect.poll(()=>page.locator('audio').evaluate((a:HTMLAudioElement)=>a.currentTime)).toBeGreaterThan(0);
+  await page.getByRole('button',{name:'Pause',exact:true}).click();
+  await expect.poll(()=>page.locator('audio').evaluate((a:HTMLAudioElement)=>a.paused)).toBe(true);
+  await page.getByRole('button',{name:'Settings',exact:true}).click();
+  await page.getByRole('button',{name:'Create pairing code'}).click();
+  await expect(page.locator('.pair code')).toHaveText(/[A-F0-9]{12}/);
+});

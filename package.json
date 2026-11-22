@@ -1,0 +1,17 @@
+{
+  "name": "resonant",
+  "private": true,
+  "packageManager": "pnpm@10.30.3",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "check": "pnpm -r --if-present check",
+    "test": "pnpm -r --if-present test",
+    "build": "pnpm --filter @resonant/web build"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "typescript": "^5.9.3"
+  }
+}

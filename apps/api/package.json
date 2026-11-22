@@ -1,0 +1,32 @@
+{
+    "name":  "@resonant/api",
+    "private":  true,
+    "type":  "module",
+    "dependencies":  {
+                         "@resonant/types":  "workspace:*",
+                         "@resonant/shared":  "workspace:*",
+                         "@resonant/validation":  "workspace:*",
+                         "@fastify/cookie":  "^11",
+                         "@fastify/cors":  "^11",
+                         "@fastify/helmet":  "^13",
+                         "@fastify/rate-limit":  "^10",
+                         "@aws-sdk/client-s3":  "^3",
+                         "@aws-sdk/s3-request-presigner":  "^3",
+                         "fastify":  "^5",
+                         "mongodb":  "^6.21.0",
+                         "music-metadata":  "^11",
+                         "zod":  "^4",
+                         "tsx":  "^4"
+                     },
+    "scripts":  {
+                    "dev":  "tsx --env-file-if-exists=../../.env src/index.ts",
+                    "start":  "tsx src/index.ts",
+                    "check":  "tsc",
+                    "test":  "vitest run"
+                },
+    "devDependencies":  {
+                            "vitest":  "^4",
+                            "mongodb-memory-server":  "11.4.0",
+                            "s3rver":  "3.7.1"
+                        }
+}

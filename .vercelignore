@@ -1,0 +1,9 @@
+downloads/
+.resonant/
+apps/mobile/
+**/test-results/
+**/.env
+**/.env.local
+**/*.jks
+**/*.p12
+**/*.pfx

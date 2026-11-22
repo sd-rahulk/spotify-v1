@@ -1,0 +1,18 @@
+services:
+  mongo:
+    image: mongo:8.0.12
+    command: ["mongod", "--replSet", "rs0", "--bind_ip_all"]
+    ports: ["127.0.0.1:27017:27017"]
+    volumes: ["metadata:/data/db"]
+  storage:
+    image: quay.io/minio/minio:RELEASE.2025-04-22T22-12-26Z
+    command: ["server", "/data", "--console-address", ":9001"]
+    environment:
+      MINIO_ROOT_USER: resonant-local
+      MINIO_ROOT_PASSWORD: resonant-local-object-dev
+      MINIO_API_CORS_ALLOW_ORIGIN: http://localhost:3000
+    ports: ["127.0.0.1:9000:9000", "127.0.0.1:9001:9001"]
+    volumes: ["media:/data"]
+volumes:
+  metadata:
+  media:
