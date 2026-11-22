@@ -1,7 +1,7 @@
 import type { FastifyInstance } from 'fastify';
 import { z } from 'zod';
-import { trackPatch,playlistPatch } from '@resonant/validation';
-import { formats } from '@resonant/shared';
+import { trackPatch,playlistPatch } from '../../../packages/validation/src/index.js';
+import { formats } from '../../../packages/shared/src/index.js';
 import { HttpError, publicTrack, type Database, type StoredTrack } from './db.js';
 import type { Config } from './config.js';
 import type { Storage } from './storage.js';

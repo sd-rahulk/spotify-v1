@@ -2,7 +2,7 @@ import type { FastifyInstance } from 'fastify';
 import { createHash, randomUUID } from 'node:crypto';
 import type { ClientSession, Filter } from 'mongodb';
 import { z } from 'zod';
-import { id, playlistPatch, syncWrites, trackPatch } from '@resonant/validation';
+import { id, playlistPatch, syncWrites, trackPatch } from '../../../packages/validation/src/index.js';
 import type { Group, Playlist } from '@resonant/types';
 import { HttpError, publicTrack, type Database, type StoredTrack } from './db.js';
 import type { Storage } from './storage.js';

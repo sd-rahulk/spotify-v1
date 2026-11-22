@@ -1,8 +1,8 @@
 import type { FastifyInstance } from 'fastify';
 import { createHash, randomUUID, timingSafeEqual } from 'node:crypto';
 import { z } from 'zod';
-import { uploadBatch } from '@resonant/validation';
-import { extension, formats } from '@resonant/shared';
+import { uploadBatch } from '../../../packages/validation/src/index.js';
+import { extension, formats } from '../../../packages/shared/src/index.js';
 import { HttpError, publicTrack, type Database, type Job, type StoredTrack } from './db.js';
 import { artKey, audioKey, type Storage } from './storage.js';
 import type { Config } from './config.js';
