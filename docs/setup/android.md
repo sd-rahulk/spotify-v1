@@ -39,3 +39,9 @@ $tools = Join-Path $env:ANDROID_HOME 'build-tools\37.0.0'
 ```
 
 Store signing keys separately and retain the same key for updates. Check Android registration and installation requirements for your chosen distribution method.
+If Ninja hits the Windows path-length limit, build with a short CMake staging directory.
+
+```powershell
+$staging = Join-Path $env:TEMP 'rs-cxx'
+.\gradlew.bat :app:assembleRelease '-PreactNativeArchitectures=arm64-v8a' "-PnativeBuildStagingDir=$staging"
+```
