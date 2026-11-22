@@ -2,9 +2,9 @@ import type { FastifyInstance } from 'fastify';
 import { z } from 'zod';
 import { trackPatch,playlistPatch } from '@resonant/validation';
 import { formats } from '@resonant/shared';
-import { HttpError, publicTrack, type Database, type StoredTrack } from './db';
-import type { Config } from './config';
-import type { Storage } from './storage';
+import { HttpError, publicTrack, type Database, type StoredTrack } from './db.js';
+import type { Config } from './config.js';
+import type { Storage } from './storage.js';
 const trackSchema=trackPatch.required().extend({
   id:z.uuid(),duration:z.number().nonnegative(),bitrate:z.number().int().nonnegative(),codec:z.string().max(240),
   filename:z.string().max(240).regex(/^[^\\/\u0000-\u001f]+$/),size:z.number().int().positive(),

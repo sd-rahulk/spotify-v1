@@ -1,6 +1,6 @@
 import { MongoClient, type ClientSession } from 'mongodb';
 import type { Change, Device, Playlist, Track } from '@resonant/types';
-import type { Config } from './config';
+import type { Config } from './config.js';
 type Doc<T> = T & { _id: string };
 export type StoredTrack = Track & { key: string; artworkKey?: string; artworkBytes?: number };
 export type Job = {

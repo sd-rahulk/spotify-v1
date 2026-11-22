@@ -1,7 +1,7 @@
 import Fastify from 'fastify';
 import { ZodError } from 'zod';
-import { buildApp } from './build-app';
-import { readConfig } from './config';
+import { buildApp } from './build-app.js';
+import { readConfig } from './config.js';
 
 async function main() {
   let config;

@@ -3,9 +3,9 @@ import { createHash, randomUUID, timingSafeEqual } from 'node:crypto';
 import { z } from 'zod';
 import { uploadBatch } from '@resonant/validation';
 import { extension, formats } from '@resonant/shared';
-import { HttpError, publicTrack, type Database, type Job, type StoredTrack } from './db';
-import { artKey, audioKey, type Storage } from './storage';
-import type { Config } from './config';
+import { HttpError, publicTrack, type Database, type Job, type StoredTrack } from './db.js';
+import { artKey, audioKey, type Storage } from './storage.js';
+import type { Config } from './config.js';
 const HOUR = 3600000;
 const params = z.object({id:z.uuid()});
 export function uploads(app:FastifyInstance, db:Database, storage:Storage, config:Config, serverless=false) {

@@ -4,14 +4,14 @@ import cors from '@fastify/cors';
 import helmet from '@fastify/helmet';
 import rateLimit from '@fastify/rate-limit';
 import { ZodError } from 'zod';
-import { auth } from './auth';
-import { database, HttpError } from './db';
-import { objectStorage } from './storage';
-import { uploads } from './uploads';
-import { library } from './library';
-import { backup } from './backup';
-import { artwork } from './artwork';
-import type { Config } from './config';
+import { auth } from './auth.js';
+import { database, HttpError } from './db.js';
+import { objectStorage } from './storage.js';
+import { uploads } from './uploads.js';
+import { library } from './library.js';
+import { backup } from './backup.js';
+import { artwork } from './artwork.js';
+import type { Config } from './config.js';
 
 export async function buildApp(config:Config,{serverless=false}={}) {
   const app=Fastify({bodyLimit:2*1024*1024,requestTimeout:30000,connectionTimeout:30000,

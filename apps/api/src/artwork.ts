@@ -1,9 +1,9 @@
 import type { FastifyInstance } from 'fastify';
 import { randomUUID } from 'node:crypto';
 import { z } from 'zod';
-import { HttpError, publicTrack, type Database } from './db';
-import type { Storage } from './storage';
-import type { Config } from './config';
+import { HttpError, publicTrack, type Database } from './db.js';
+import type { Storage } from './storage.js';
+import type { Config } from './config.js';
 
 export function artwork(app:FastifyInstance,db:Database,storage:Storage,config:Config) {
   app.put('/api/tracks/:id/artwork',async req=>{

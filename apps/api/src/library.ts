@@ -4,9 +4,9 @@ import type { ClientSession, Filter } from 'mongodb';
 import { z } from 'zod';
 import { id, playlistPatch, syncWrites, trackPatch } from '@resonant/validation';
 import type { Group, Playlist } from '@resonant/types';
-import { HttpError, publicTrack, type Database, type StoredTrack } from './db';
-import type { Storage } from './storage';
-import type { Config } from './config';
+import { HttpError, publicTrack, type Database, type StoredTrack } from './db.js';
+import type { Storage } from './storage.js';
+import type { Config } from './config.js';
 
 const trackId = (params:unknown) => z.object({id}).parse(params).id;
 const notFound = () => new HttpError(404,'NOT_FOUND','Library item not found');

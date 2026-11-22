@@ -1,8 +1,8 @@
 import type { FastifyInstance, FastifyRequest } from 'fastify';
 import { createHmac, randomBytes, randomUUID, timingSafeEqual } from 'node:crypto';
 import { z } from 'zod';
-import type { Config } from './config';
-import { HttpError, type Database } from './db';
+import type { Config } from './config.js';
+import { HttpError, type Database } from './db.js';
 const cookieName = 'resonant_owner';
 const DAY = 86400000;
 export async function auth(app:FastifyInstance, db:Database, config:Config) {

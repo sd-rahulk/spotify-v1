@@ -3,8 +3,8 @@ import { createRequire } from 'node:module';
 import { mkdtemp,rm } from 'node:fs/promises';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
-import { buildApp } from '../src/build-app';
-import { readConfig } from '../src/config';
+import { buildApp } from '../src/build-app.js';
+import { readConfig } from '../src/config.js';
 const require=createRequire(import.meta.url);
 const S3rver=require('s3rver');
 async function main() {
